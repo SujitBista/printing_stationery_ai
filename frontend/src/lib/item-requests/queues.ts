@@ -22,6 +22,10 @@ import {
 export const ITEM_REQUEST_MAKER_SUBMITTED_HREF =
   "/requests/item-requests?status=SUBMITTED";
 
+/** Old Recommended history page. Bookmarks land on All Requests filtered to Recommended. */
+export const ITEM_REQUEST_RECOMMENDED_HREF =
+  "/requests/item-requests?status=RECOMMENDED";
+
 export const ITEM_REQUEST_SUBMITTED_EMPTY_TITLE = "No submitted requests found.";
 
 export const ITEM_REQUEST_CHECKER_REVIEW_EMPTY_TITLE =
@@ -93,9 +97,10 @@ const ITEM_REQUEST_QUEUE_DEFINITIONS: ItemRequestQueueDefinition[] = [
     key: "recommended",
     sidebarLabel: "Recommended",
     tabLabel: "Recommended",
-    title: "Recommended Item Requests",
-    description: "Requests you recommended that are now with corporate.",
-    href: "/requests/item-requests/recommended",
+    title: "All Requests",
+    description:
+      "Recommended requests are listed on All Requests when Status is Recommended.",
+    href: ITEM_REQUEST_RECOMMENDED_HREF,
     navGroup: "workflow",
   },
   {

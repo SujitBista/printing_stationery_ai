@@ -1364,6 +1364,14 @@ const headerSelect = {
     order by open_issues.updated_at desc, open_issues.created_at desc, open_issues.id desc
     limit 1
   )`,
+  recommendationRemarks: sql<string | null>`(
+    select ${itemRequestActions.remarks}
+    from ${itemRequestActions}
+    where ${itemRequestActions.itemRequestId} = ${itemRequests.id}
+      and ${itemRequestActions.action} = 'RECOMMEND'
+    order by ${itemRequestActions.createdAt} desc, ${itemRequestActions.id} desc
+    limit 1
+  )`,
 };
 
 function itemRequestHeaderJoins() {
@@ -1455,6 +1463,7 @@ type HeaderJoinedRow = {
     issueNumber: string;
     status: ItemIssueStatus;
   } | null;
+  recommendationRemarks: string | null;
 };
 
 async function attachAvailableStockToListItems(
@@ -1566,6 +1575,14 @@ function parseActiveIssue(
   };
 }
 
+function recommendationRemarksFromRow(value: string | null | undefined): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+  const trimmed = value.trim();
+  return trimmed.length === 0 ? null : trimmed;
+}
+
 function toListItem(
   row: HeaderJoinedRow,
   actor: AuthenticatedUser,
@@ -1659,6 +1676,9 @@ function toListItem(
       corporateMaker,
       corporateChecker,
     }),
+    recommendedAt: row.request.recommendedAt?.toISOString() ?? null,
+    recommendedBy: row.request.recommendedAt ? branchChecker : null,
+    recommendationRemarks: recommendationRemarksFromRow(row.recommendationRemarks),
     canEdit: canEditRequest(row.request, actor),
     canDelete: isAdminUser(actor),
     canCreateIssue,

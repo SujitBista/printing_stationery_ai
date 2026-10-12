@@ -28,13 +28,7 @@ export const ITEM_REQUEST_ROLE_WORKFLOW_QUEUES = {
     "rejected",
   ],
   BRANCH_MAKER: ["drafts", "returned", "rejected", "request-list"],
-  BRANCH_CHECKER: [
-    "recommend",
-    "recommended",
-    "returned",
-    "rejected",
-    "request-list",
-  ],
+  BRANCH_CHECKER: ["recommend", "returned", "rejected", "request-list"],
   CORPORATE_MAKER: [
     "review",
     "forwarded",
